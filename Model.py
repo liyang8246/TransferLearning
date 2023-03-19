@@ -14,11 +14,11 @@ class ResMod(nn.Module):
         x1 = self.conv2(x1)
         return self.r2(x1 + x)
 
-class Modle(nn.Module):
+class Model(nn.Module):
     def __init__(self) -> None:
-        super(Modle,self).__init__()
+        super(Model,self).__init__()
         self.conv_1 = nn.Sequential(
-            nn.Conv2d(3,16,7,2,3),
+            nn.Conv2d(1,16,7,2,3),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
@@ -33,13 +33,16 @@ class Modle(nn.Module):
             nn.MaxPool2d(2)
         )
         self.resmod = nn.Sequential(
-            *[ResMod(64,3) for i in range(40)]
+            *[ResMod(64,64,3,1,1) for i in range(64)]
         )
         self.liner = nn.Sequential(
             nn.Flatten(),
             nn.Linear(4096,512),
+            nn.ReLU(),
             nn.Linear(512,512),
+            nn.ReLU(),
             nn.Linear(512,2),
+            nn.Softmax(1)
         )
 
     def forward(self,input):
