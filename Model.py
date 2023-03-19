@@ -33,7 +33,7 @@ class Model(nn.Module):
             nn.MaxPool2d(2)
         )
         self.resmod = nn.Sequential(
-            *[ResMod(64,64,3,1,1) for i in range(64)]
+            *[ResMod(64,3) for i in range(64)]
         )
         self.liner = nn.Sequential(
             nn.Flatten(),
